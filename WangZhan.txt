@@ -6,4 +6,5 @@ QQ,https://y.qq.com/,音乐
 爱奇艺,https://www.iqiyi.com/,视频
 优酷,https://youku.com/,视频
 芒果,https://www.mgtv.com/,视频
-
+虎牙,https://www.huya.com/,视频
+抖音,https://www.douyin.com/,视频
