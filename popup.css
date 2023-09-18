@@ -1,0 +1,94 @@
+body {
+    min-width: 300px;
+    min-height: 200px;
+    overflow: hidden;
+    background-color: #f0f0f0;
+}
+
+#Huner, #Fen, #Lian {
+    border: 1px solid rgba(0, 0, 0, 0);
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#Huner {
+    display: flex;
+    flex-direction: row;
+}
+
+#Fen {
+    width: 50px;
+    overflow: hidden;
+}
+
+#Lian {
+    flex-grow: 1;
+    overflow: hidden;
+}
+
+.kuai {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 3px;
+}
+
+.row {
+    display: flex;
+}
+
+.bao {
+    width: 80px;
+    height: 80px;
+    border: 1px solid rgba(0, 0, 0, 0);
+    margin-right: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    transition: transform 0.2s;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.bao img {
+    width: auto;
+    height: 30px;
+    margin-bottom: 5px;
+}
+
+.bao a {
+    display: inline-block;
+    width: 90%;
+    padding: 5px;
+    background-color: #fff;
+    color: #333;
+    text-decoration: none;
+    text-align: center;
+    border-radius: 50px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.bao a:hover {
+    background-color: #ddd;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #fff;
+    color: #333;
+    border: none;
+    border-radius: 50px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ddd;
+    transform: scale(1.05);
+}

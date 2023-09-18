@@ -1,0 +1,7 @@
+B站,https://www.bilibili.com/,视频
+酷狗,https://www.kugou.com/,音乐
+网易,https://music.163.com/,音乐
+QQ,https://y.qq.com/,音乐
+腾讯,https://v.qq.com/,视频
+爱奇艺,https://www.iqiyi.com/,视频
+优酷,https://youku.com/,视频
