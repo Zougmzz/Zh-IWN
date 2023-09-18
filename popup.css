@@ -2,29 +2,80 @@ body {
     min-width: 300px;
     min-height: 200px;
     overflow: hidden;
-    background-color: #f0f0f0;
+    background-color: #fff;
 }
 
-#Huner, #Fen, #Lian {
-    border: 1px solid rgba(0, 0, 0, 0);
+.popup {
     background-color: #fff;
+    border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    margin: 10px;
+}
+
+#SSQ {
+    top: 0;
+    left: 0;
+    width: 95%;
+    background-color: transparent;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border: none;
+}
+
+#searchBox {
+    width: 70%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#searchButton {
+    display: block;
+    flex: 0 0 20%;
+    padding: 5px 10px;
+    background-color: #fff;
+    color: #333;
+    border: none;
+    border-radius: 50px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+#searchButton:hover {
+    background-color: #ddd;
 }
 
 #Huner {
     display: flex;
     flex-direction: row;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
 }
 
 #Fen {
     width: 50px;
     overflow: hidden;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 #Lian {
     flex-grow: 1;
     overflow: hidden;
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
 }
 
 .kuai {
@@ -68,7 +119,7 @@ body {
     text-decoration: none;
     text-align: center;
     border-radius: 50px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .bao a:hover {
@@ -79,12 +130,13 @@ button {
     display: block;
     width: 100%;
     padding: 10px;
+    margin: 10px 0;
     background-color: #fff;
     color: #333;
     border: none;
     border-radius: 50px;
     transition: all 0.2s;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     cursor: pointer;
 }
 
