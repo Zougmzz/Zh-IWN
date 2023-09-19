@@ -4,6 +4,45 @@ document.addEventListener('DOMContentLoaded', function () {
     const existingCategories = new Set();
     let cachedWebsiteData = null;
 
+    const showImagesButton = document.getElementById("showImagesButton");
+    let isImageVisible = false;
+  
+    showImagesButton.addEventListener("click", function () {
+      if (!isImageVisible) {
+        // 创建一个容器
+        const imageContainer = document.createElement("div");
+        imageContainer.classList.add("image-container");
+  
+        // 创建并添加支付宝图像
+        const zfbImage = document.createElement("img");
+        zfbImage.src = "images/zfb.png";
+        zfbImage.alt = "支付宝";
+        zfbImage.classList.add("thumbnail");
+        imageContainer.appendChild(zfbImage);
+  
+        // 创建并添加微信图像
+        const wxImage = document.createElement("img");
+        wxImage.src = "images/wx.png";
+        wxImage.alt = "微信";
+        wxImage.classList.add("thumbnail");
+        imageContainer.appendChild(wxImage);
+  
+        // 将容器添加到Lian元素的左边
+        const lian = document.getElementById("Lian");
+        lian.parentNode.insertBefore(imageContainer, lian);
+  
+        isImageVisible = true;
+      } else {
+        // 删除容器
+        const imageContainer = document.querySelector(".image-container");
+        if (imageContainer) {
+          imageContainer.parentNode.removeChild(imageContainer);
+        }
+        isImageVisible = false;
+      }
+    });
+  
+
     function displayWebsitesByCategory(category, websiteData) {
         LianContainer.innerHTML = '';
 
