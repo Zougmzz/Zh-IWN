@@ -31,6 +31,15 @@
 国家政务服务平台,http://gjzwfw.www.gov.cn/,政府
 
 
+LOL,https://lol.qq.com/,游戏
+steam,https://store.steampowered.com/,游戏
+Epic,https://store.epicgames.com/,游戏
+育碧,https://ubisoft.com/,游戏
+米哈游,https://www.mihoyo.com/,游戏
+鹰角网络,https://www.hypergryph.com/,游戏
+库洛游戏,https://www.kurogame.com/,游戏
+
+
 bilibili,https://www.bilibili.com/,视频
 腾讯视频,https://v.qq.com/,视频
 爱奇艺,https://www.iqiyi.com/,视频
@@ -47,6 +56,15 @@ bilibili,https://www.bilibili.com/,视频
 网易音乐,https://music.163.com/,音乐
 QQ音乐,https://y.qq.com/,音乐
 酷我,https://kuwo.cn/,音乐
+
+
+GeeK,https://geekuninstaller.com/,清理
+iobit,https://www.iobit.com/,清理
+CCleaner,https://www.ccleaner.com/,清理
+
+
+360杀毒,https://sd.360.cn/,杀毒
+卡巴斯基,https://www.kaspersky.com.cn/,杀毒
 
 
 中国银行,https://www.boc.cn/,银行
