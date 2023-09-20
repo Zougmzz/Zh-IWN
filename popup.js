@@ -1,79 +1,12 @@
 document.addEventListener('DOMContentLoaded', function () {
+    const showImagesButton = document.getElementById("showImagesButton");
     const LianContainer = document.getElementById("Lian");
     const FenContainer = document.getElementById("Fen");
     const existingCategories = new Set();
-    let cachedWebsiteData = null;
-
-    const showImagesButton = document.getElementById("showImagesButton");
     let isImageVisible = false;
-  
-    showImagesButton.addEventListener("click", function () {
-      if (!isImageVisible) {
-        // 创建一个容器
-        const imageContainer = document.createElement("div");
-        imageContainer.classList.add("image-container");
-  
-        // 创建并添加支付宝图像
-        const zfbImage = document.createElement("img");
-        zfbImage.src = "images/zfb.png";
-        zfbImage.alt = "支付宝";
-        zfbImage.classList.add("thumbnail");
-        imageContainer.appendChild(zfbImage);
-  
-        // 创建并添加微信图像
-        const wxImage = document.createElement("img");
-        wxImage.src = "images/wx.png";
-        wxImage.alt = "微信";
-        wxImage.classList.add("thumbnail");
-        imageContainer.appendChild(wxImage);
-  
-        // 将容器添加到Lian元素的左边
-        const lian = document.getElementById("Lian");
-        lian.parentNode.insertBefore(imageContainer, lian);
-  
-        isImageVisible = true;
-      } else {
-        // 删除容器
-        const imageContainer = document.querySelector(".image-container");
-        if (imageContainer) {
-          imageContainer.parentNode.removeChild(imageContainer);
-        }
-        isImageVisible = false;
-      }
-    });
-  
+    let cachedWebsiteData = [];
 
-    function displayWebsitesByCategory(category, websiteData) {
-        LianContainer.innerHTML = '';
-
-        const filteredData = websiteData.filter(item => item[2] === category);
-
-        let currentKuai = null;
-        let currentRow = null;
-        filteredData.forEach((item, index) => {
-            if (index % 3 === 0) {
-                currentKuai = document.createElement("div");
-                currentKuai.className = "kuai";
-                currentRow = document.createElement("div");
-                currentRow.className = "row";
-                LianContainer.appendChild(currentKuai);
-                currentKuai.appendChild(currentRow);
-            }
-
-            const baoContainer = document.createElement("div");
-            baoContainer.className = "bao";
-            baoContainer.innerHTML = `
-                <div class="icon-link">
-                    <img src="${item[1]}/favicon.ico" class="icon" >
-                    <a href="${item[1]}" target="_blank">${item[0]}</a>
-                </div>
-            `;
-            if (currentRow) {
-                currentRow.appendChild(baoContainer);
-            }
-        });
-    }
-
+    // 搜索功能
     const searchBox = document.getElementById("searchBox");
     const searchButton = document.getElementById("searchButton");
 
@@ -86,110 +19,219 @@ document.addEventListener('DOMContentLoaded', function () {
                 return baoName.includes(keyword);
             });
 
-            displayWebsitesByCategory(filteredData[0][2], filteredData);
+            const categories = [...new Set(filteredData.map(item => item[2]))];
+            displayWebsitesByCategory(categories, filteredData);
         }
     }
 
-    // 添加回车键事件处理程序
     searchBox.addEventListener("keyup", function (event) {
         if (event.key === "Enter") {
             performSearch();
         }
     });
 
-    // 添加点击搜索按钮事件处理程序
+    // 获取网站数据
+    function fetchWebsiteData() {
+        const url1 = 'https://gitee.com/mysterious_fog/Zh-IWN/raw/Zuner/WangZhan.txt';
+        const url2 = 'https://raw.githubusercontent.com/Zougmzz/Zh-IWN/Zuner/WangZhan.txt';
+    
+        const fetchPromises = [
+            fetch(url1).then(response => response.text()).catch(error => ''),
+            fetch(url2).then(response => response.text()).catch(error => '')
+        ];
+    
+        Promise.all(fetchPromises)
+            .then(responses => {
+                const allData = [];
+    
+                responses.forEach(data => {
+                    if (data) {
+                        const lines = data.split('\n');
+                        const dataArray = lines
+                            .map(line => line.trim())
+                            .filter(line => line !== "")
+                            .map(line => line.split(','));
+                        allData.push(...dataArray);
+                    }
+                });
+    
+                const uniqueData = removeDuplicates(allData);
+    
+                cachedWebsiteData = uniqueData;
+                createCategoryButtons();
+                displayWebsitesByCategory([cachedWebsiteData[0][2]], cachedWebsiteData);
+            })
+            .catch(error => {
+                console.error('发生错误：', error);
+            });
+    }
+
     searchButton.addEventListener("click", performSearch);
 
+    // 去除重复项
+    function removeDuplicates(dataArray) {
+        const uniqueData = [];
+        const uniqueKeys = new Set();
+    
+        dataArray.forEach(item => {
+            const key = `${item[0]}_${item[1]}`;
+            if (!uniqueKeys.has(key)) {
+                uniqueData.push(item);
+                uniqueKeys.add(key);
+            }
+        });
+    
+        return uniqueData;
+    }
+
+    // 显示网站
+    function displayWebsitesByCategory(categories, websiteData) {
+        LianContainer.innerHTML = '';
+
+        categories.forEach(category => {
+            const filteredData = websiteData.filter(item => item[2] === category);
+
+            let currentKuai = null;
+            let currentRow = null;
+
+            filteredData.forEach((item, index) => {
+                if (index % 3 === 0) {
+                    currentKuai = document.createElement("div");
+                    currentKuai.className = "kuai";
+                    currentRow = document.createElement("div");
+                    currentRow.className = "row";
+                    LianContainer.appendChild(currentKuai);
+                    currentKuai.appendChild(currentRow);
+                }
+
+                const baoContainer = document.createElement("div");
+                baoContainer.className = "bao";
+
+                const faviconImage = document.createElement("img");
+                faviconImage.src = `${item[1]}/favicon.ico`;
+                faviconImage.classList.add("icon");
+
+                const websiteLink = document.createElement("a");
+                websiteLink.href = item[1];
+                websiteLink.target = "_blank";
+                websiteLink.textContent = item[0];
+
+                const iconLinkContainer = document.createElement("div");
+                iconLinkContainer.className = "icon-link";
+
+                let iconLoadTimeout = setTimeout(() => {
+                    faviconImage.style.display = "none";
+                    const noIconText = document.createElement("div");
+                    noIconText.textContent = "没找到图标";
+                    noIconText.style.fontWeight = "bold";
+                    baoContainer.insertBefore(noIconText, websiteLink);
+                }, 1000);
+
+                faviconImage.onload = function () {
+                    clearTimeout(iconLoadTimeout);
+                };
+
+                iconLinkContainer.appendChild(faviconImage);
+                baoContainer.appendChild(iconLinkContainer);
+                baoContainer.appendChild(websiteLink);
+
+                if (currentRow) {
+                    currentRow.appendChild(baoContainer);
+                }
+            });
+        });
+    }
+
+    // 创建类别按钮
     function createCategoryButtons() {
         cachedWebsiteData.forEach(item => {
             const category = item[2];
             if (!existingCategories.has(category)) {
                 existingCategories.add(category);
-
+    
                 const button = document.createElement("button");
                 button.textContent = category;
                 button.addEventListener("click", () => {
-                    displayWebsitesByCategory(category, cachedWebsiteData);
+                    const filteredData = cachedWebsiteData.filter(item => item[2] === category);
+                    displayWebsitesByCategory([category], filteredData);
                 });
                 if (FenContainer) {
                     FenContainer.appendChild(button);
                 }
             }
         });
-    }
-
-    function fetchWebsiteData() {
-        const now = new Date();
-        const today = now.getDay();
-
-        // 检查是否是星期一
-        if (today !== 1) {
-            // 如果不是星期一，则尝试从本地存储加载数据
-            const localWebsiteData = localStorage.getItem('websiteData');
-            if (localWebsiteData) {
-                cachedWebsiteData = JSON.parse(localWebsiteData);
-                createCategoryButtons();
-                displayWebsitesByCategory(cachedWebsiteData[0][2], cachedWebsiteData);
-                return; // 不执行网络请求
-            }
-        }
-
-        const urls = [
-            'https://raw.githubusercontent.com/Zougmzz/Zh-IWN/Zuner/WangZhan.txt',
-            'https://gitee.com/mysterious_fog/Zh-IWN/raw/Zuner/WangZhan.txt'
-        ];
-
-        Promise.all(urls.map(url => fetch(url)
-            .then(response => response.text())
-            .then(data => {
-                const lines = data.split('\n');
-
-                return lines
-                    .map(line => line.trim())
-                    .filter(line => line !== "")
-                    .map(line => line.split(','));
-            })))
-            .then(dataArray => {
-                cachedWebsiteData = dataArray.reduce((acc, currentData) => {
-                    currentData.forEach(item => {
-                        const key = `${item[0]}_${item[1]}`;
-                        if (!acc.has(key)) {
-                            acc.set(key, item);
-                        }
-                    });
-                    return acc;
-                }, new Map());
-
-                cachedWebsiteData = [...cachedWebsiteData.values()];
-
-                // 将数据保存到本地存储
-                localStorage.setItem('websiteData', JSON.stringify(cachedWebsiteData));
-
-                createCategoryButtons();
-                displayWebsitesByCategory(cachedWebsiteData[0][2], cachedWebsiteData);
-            });
-    }
-
-    try {
-        // 检查是否是星期一
-        const now = new Date();
-        const today = now.getDay();
-
-        if (today === 1) {
-            // 如果是星期一，则进行数据更新
-            fetchWebsiteData();
-        } else {
-            // 如果不是星期一，则尝试从本地存储加载数据
-            const localWebsiteData = localStorage.getItem('websiteData');
-            if (localWebsiteData) {
-                cachedWebsiteData = JSON.parse(localWebsiteData);
-                createCategoryButtons();
-                displayWebsitesByCategory(cachedWebsiteData[0][2], cachedWebsiteData);
+    
+        let isNightMode = localStorage.getItem("isNightMode") === "true";
+        const toggleButton = document.createElement("button");
+        toggleButton.textContent = "切换";
+        toggleButton.id = "Qhuan";
+        toggleButton.addEventListener("click", () => {
+            isNightMode = !isNightMode;
+            const rootElement = document.documentElement;
+            if (isNightMode) {
+                rootElement.classList.add("night-mode");
+                rootElement.classList.remove("day-mode");
             } else {
-                // 如果本地没有数据，仍然进行网络请求
-                fetchWebsiteData();
+                rootElement.classList.remove("night-mode");
+                rootElement.classList.add("day-mode");
             }
+
+            localStorage.setItem("isNightMode", isNightMode.toString());
+        });
+    
+        const rootElement = document.documentElement;
+        if (isNightMode) {
+            rootElement.classList.add("night-mode");
+        } else {
+            rootElement.classList.add("day-mode");
         }
+    
+        if (FenContainer) {
+            FenContainer.appendChild(toggleButton);
+        }
+    }
+
+    // 捐赠通道
+    showImagesButton.addEventListener("click", function () {
+        if (!isImageVisible) {
+
+            const imageContainer = document.createElement("div");
+            imageContainer.classList.add("image-container");
+
+            const imageSources = [
+                "https://gitee.com/mysterious_fog/Zh-IWN/raw/Zuner/images/zfb.png",
+                "https://gitee.com/mysterious_fog/Zh-IWN/raw/Zuner/images/wx.png",
+                "https://github.com/Zougmzz/Zh-IWN/blob/Zuner/images/zfb.png",
+                "https://github.com/Zougmzz/Zh-IWN/blob/Zuner/images/wx.png",
+            ];
+
+            imageSources.forEach(source => {
+                const image = document.createElement("img");
+                image.src = source;
+                image.alt = source.includes("zfb.png") ? "支付宝" : "微信";
+                image.classList.add("thumbnail");
+                image.onerror = function () {
+                    this.style.display = "none";
+                };
+                imageContainer.appendChild(image);
+            });
+
+            const lian = document.getElementById("Lian");
+            lian.parentNode.insertBefore(imageContainer, lian);
+
+            isImageVisible = true;
+        } else {
+            const imageContainer = document.querySelector(".image-container");
+            if (imageContainer) {
+                imageContainer.parentNode.removeChild(imageContainer);
+            }
+            isImageVisible = false;
+        }
+    });
+    
+    // 尝试获取网站数据
+    try {
+        fetchWebsiteData();
     } catch (error) {
         console.error('发生错误：', error);
     }

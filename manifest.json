@@ -4,7 +4,9 @@
   "version": "1.0",
   "description": "一个简单的浏览器导航插件",
   "permissions": [
-    "activeTab"
+    "storage",
+    "activeTab",
+    "tabs"
   ],
   "action": {
     "default_popup": "popup.html",
@@ -29,5 +31,10 @@
       "resources": ["WangZhan.txt"],
       "matches": ["<all_urls>"]
     }
-  ]
+  ],
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  }
 }

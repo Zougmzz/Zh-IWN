@@ -1,7 +1,20 @@
+@font-face {
+    font-family: 'ChillRoundGothicBold';
+    src: url('ChillRoundGothic_Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+body, .popup, #SSQ, .donate-button, #searchBox, #searchButton, #Huner, #Fen, #Lian, .bao, .bao a, button, .image-container {
+    font-family: 'ChillRoundGothicBold', Arial, sans-serif;
+}
+
 body {
     min-width: 300px;
     min-height: 200px;
     overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: hidden;
     background-color: #fff;
 }
 
@@ -12,6 +25,7 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     padding: 10px;
     margin: 10px;
+    overflow: hidden;
 }
 
 #SSQ {
@@ -117,7 +131,7 @@ body {
 
 .bao {
     width: 80px;
-    height: 80px;
+    height: 85px;
     border: 1px solid rgba(0, 0, 0, 0);
     margin-right: 10px;
     margin-bottom: 10px;
@@ -188,4 +202,86 @@ button:hover {
 .thumbnail {
     width: 80%;
     margin-bottom: 10px;
+}
+
+/* 黑夜模式样式 */
+.night-mode body {
+    background-color: #111;
+    color: #ccc;
+}
+
+.night-mode .popup {
+    background-color: #111;
+    border: 1px solid #000;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.4);
+    color: #ccc;
+}
+
+.night-mode #SSQ {
+    background-color: #111;
+    border: none;
+}
+
+.night-mode .donate-button {
+    background-color: #111;
+    color: #ccc;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.5);
+}
+
+.night-mode #searchBox {
+    color: #ccc;
+    background-color: #111;
+    border: 1px solid #000;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.2);
+}
+
+.night-mode #searchButton {
+    background-color: #111;
+    color: #ccc;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.4);
+}
+
+.night-mode #Huner {
+    background-color: #111;
+}
+
+.night-mode #Fen {
+    background-color: #111;
+}
+
+.night-mode #Lian {
+    background-color: #111;
+}
+
+.night-mode .kuai {
+    background-color: #111;
+}
+
+.night-mode .row {
+    background-color: #111;
+}
+
+.night-mode .bao {
+    background-color: #111;
+    border: 1px solid #000;
+    color: #ccc;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
+}
+
+.night-mode .bao a {
+    background-color: #111;
+    color: #ccc;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
+}
+
+.night-mode button {
+    background-color: #111;
+    color: #ccc;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.4);
+}
+
+.night-mode .image-container {
+    background-color: #111;
+    border: 1px solid #000;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
 }
